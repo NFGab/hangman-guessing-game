@@ -51,6 +51,16 @@ function isRepeated(chara){
   return false;
 }
 
+function victoryCon(){
+  const vic = revealed.includes(false);
+  if(!vic){
+    console.clear();
+    console.log("TEMP: You win!");
+    generateObsQuote();
+    console.log(vic);
+  }
+}
+
 function guessFunc(){
   const raw = guessElem.value;
   guessElem.value = '';
@@ -78,8 +88,10 @@ function guessFunc(){
     guessedCharsW.push(chara);
     console.log(guessedCharsW);
   }
-  
+
   renderQuote();
+  victoryCon();
+
 }
 
 guessElem.addEventListener("keydown",function(event){
