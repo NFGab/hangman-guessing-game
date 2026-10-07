@@ -3,6 +3,7 @@ import { quotes } from "./quotes.js";
 const viewElem = document.querySelector('.js-encr-view');
 const guessElem = document.querySelector('.js-ans-input');
 const rtryBtn = document.querySelector('.js-rtryBtn');
+const smileImgElem = document.querySelector('.js-mouth-img');
 
 
 function getRandomInt(min, max){
@@ -34,6 +35,7 @@ function generateObsQuote(){
   guessElem.value = '';
   renderQuote();
   guessedCharsW = [];
+
   guessedCharsC = [];
   gameOver = false;
   //updater here
@@ -51,7 +53,12 @@ function victoryCon(){
   if(!vic){
     console.clear();
     console.log("TEMP: You win!");
-    generateObsQuote();
+    smileImgElem.src = "/assets/vict-smile.png"
+    
+    setTimeout(() => {
+      generateObsQuote();
+    }, 3000);
+    
     console.log(vic);
   }
 }

@@ -14,7 +14,37 @@ body {
 }
 
 .encr-view {
-  font-size: 40px;
+  font-size: 2.5em;
+  text-shadow: 9px 4px 3px #0D0603;
+}
+
+.mouth-img {
+  display: block;
+  width: 90%;
+  pointer-events: none;
+}
+
+.mouth-wrap {
+  position: relative;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.ans-input {
+  font-family: "Libre Caslon Condensed", "Times New Roman", serif;
+  position: absolute;
+  top: 40%;   
+  left: 19%;
+  width: 50%;
+  height: 25%;
+
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  color: #fff;
+  font-size: 1.5rem;
+  caret-color: #fff;
 }
 
 .game-container {
@@ -23,11 +53,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  /* gap: 1.5rem; */
 }
 
 .play-area {
   color: #fff;
+  width: min(600px, 90vw);
+  text-align: center;
 }
 
 .bg-glitch {
@@ -49,10 +81,6 @@ body {
   filter: url(#transmissionerror);
 }
 
-.bg-glitch img:nth-child(2) {
-  filter: grayscale(100%) contrast(1000%);
-  mix-blend-mode: multiply;
-}
 
 .bg-glitch::after {
   content: '';
