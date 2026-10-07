@@ -14,11 +14,15 @@ function isGuessable(char){
   return /[a-zA-Z0-9]/.test(char);
 }
 
+const MAX_MISTAKES = 10;
+const livesWrapElem = document.querySelector('.js-lives-wrap');
+
 let quoteIndex;
 let currentQuote;
 let revealed;
 let guessedCharsW = [];
 let guessedCharsC = [];
+let gameOver = false;
 
 
 function generateObsQuote(){
@@ -30,7 +34,32 @@ function generateObsQuote(){
   renderQuote();
   guessedCharsW = [];
   guessedCharsC = [];
+  gameOver = false;
+  //updater here
+  updateLivesDisplay();
   
+}
+
+function updateLivesDisplay(){
+  const progress = Math.min(guessedCharsW.length/MAX_MISTAKES, 1);
+  livesWrapElem.style.setProperty('--progress', progress);
+}
+
+function victoryCon(){
+  const vic = revealed.includes(false);
+  if(!vic){
+    console.clear();
+    console.log("TEMP: You win!");
+    generateObsQuote();
+    console.log(vic);
+  }
+}
+
+function loseCon(){
+  if(guessedCharsW.length >= MAX_MISTAKES){
+    gameOver = true;
+    console.log("TEMP: You lose! The quote was: "+currentQuote);
+  }
 }
 
 function renderQuote(){
@@ -49,16 +78,6 @@ function isRepeated(chara){
     }
   }
   return false;
-}
-
-function victoryCon(){
-  const vic = revealed.includes(false);
-  if(!vic){
-    console.clear();
-    console.log("TEMP: You win!");
-    generateObsQuote();
-    console.log(vic);
-  }
 }
 
 function guessFunc(){
@@ -87,10 +106,12 @@ function guessFunc(){
   } else {
     guessedCharsW.push(chara);
     console.log(guessedCharsW);
+    updateLivesDisplay();
   }
 
   renderQuote();
   victoryCon();
+  loseCon();
 
 }
 

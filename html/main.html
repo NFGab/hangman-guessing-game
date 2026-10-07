@@ -3,12 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Cryptography Game</title>
 </head>
 <body>
-    <p class="js-encr-view"></p>
-    <input class="js-ans-input" placeholder="Guess" maxlength="1">
+    <div class="play-area">
+        <p class="js-encr-view"></p>
+        <input class="js-ans-input" placeholder="Guess" maxlength="1">
+    </div>
 
+    <div class="lives-wrap js-lives-wrap">
+        <img src="/assets/player.png" class="lives-player">
+        <img src="/assets/noose.png" class="lives-noose js-lives-noose">
+    </div>
 
     <script type="module" src="/scripts/loop.js" ></script>
 </body>
