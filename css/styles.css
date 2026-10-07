@@ -1,14 +1,73 @@
 body {
-    background-color: black;
-    color: white;
+    margin: 0;
+    font-family: "Libre Caslon Condensed", "Times New Roman", serif;
+    background: linear-gradient(135deg,
+      rgba(255,255,255,0) 0%, rgba(255,255,255,0) 33%,
+      rgba(255,255,255,0.05) 33%, rgba(255,255,255,0.0) 66%,
+      rgba(255,255,255,0) 66%, rgba(255,255,255,0) 100%),
+    rgba(26, 48, 22);
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.encr-view {
+  font-size: 40px;
+}
+
+.game-container {
+  position: relative;
+  z-index: 1;           /* sits above .bg-glitch, which is z-index: -1 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.play-area {
+  color: #fff;
+}
+
+.bg-glitch {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;       
+}
+
+.bg-glitch img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+}
+
+.bg-glitch img:nth-child(1) {
+  filter: url(#transmissionerror);
+}
+
+.bg-glitch img:nth-child(2) {
+  filter: grayscale(100%) contrast(1000%);
+  mix-blend-mode: multiply;
+}
+
+.bg-glitch::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center,
+      rgba(0,0,0,0) 10%,
+      rgba(0, 0, 0, 0.911) 100%);
+}
 .lives-wrap {
   position: relative;
-  width: 160px;
-  height: 160px;
+  width: 250px;
+  height: 250px;
   background: #fff;
-  border: 2px solid #000;
   overflow: hidden;    
 }
 
@@ -16,16 +75,17 @@ body {
   position: absolute;
   bottom: 8px;
   left: 50%;
-  width: 90px;
+  width: 60%;
   transform: translateX(-50%);
 }
 
 .lives-noose {
   position: absolute;
-  top: -110px;     
+  top: -18px;             
   left: 50%;
-  width: 55px;
-  transform: translate(-50%, calc(var(--progress, 0) * 150px));
-  opacity: calc(0.15 + var(--progress, 0) * 0.85);
-  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  width: 30%;
+  transform: translateX(-50%);
+  filter: invert(10%) sepia(87%) saturate(6295%) hue-rotate(345deg) brightness(84%) contrast(108%);
+  opacity: var(--progress, 0);
+  transition: opacity 0.4s ease-out;
 }

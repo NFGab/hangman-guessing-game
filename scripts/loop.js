@@ -2,6 +2,7 @@ import { quotes } from "./quotes.js";
 
 const viewElem = document.querySelector('.js-encr-view');
 const guessElem = document.querySelector('.js-ans-input');
+const rtryBtn = document.querySelector('.js-rtryBtn');
 
 
 function getRandomInt(min, max){
@@ -59,6 +60,7 @@ function loseCon(){
   if(guessedCharsW.length >= MAX_MISTAKES){
     gameOver = true;
     console.log("TEMP: You lose! The quote was: "+currentQuote);
+    rtryBtn.innerHTML = `<button type="button" onclick="window.location.reload()">Retry</button>`;
   }
 }
 
