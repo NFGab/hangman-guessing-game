@@ -3,7 +3,9 @@ import { quotes } from "./quotes.js";
 const viewElem = document.querySelector('.js-encr-view');
 const guessElem = document.querySelector('.js-ans-input');
 const rtryBtn = document.querySelector('.js-rtryBtn');
-const smileImgElem = document.querySelector('.js-mouth-img');
+const mouthImgElem = document.querySelector('.js-mouth-img');
+const smileImgUrl = "/assets/vict-smile.png";
+const resetImgUrl = "/assets/mouth-nobg.png";
 
 
 function getRandomInt(min, max){
@@ -34,18 +36,22 @@ function generateObsQuote(){
   revealed = currentQuote.split('').map(char => !isGuessable(char));
   guessElem.value = '';
   renderQuote();
-  guessedCharsW = [];
 
+  //updaters here
+  guessedCharsW = [];
   guessedCharsC = [];
   gameOver = false;
-  //updater here
-  updateLivesDisplay();
+  mouthImgElem.src = resetImgUrl;
   
+  
+  updateLivesDisplay();
 }
 
 function updateLivesDisplay(){
   const progress = Math.min(guessedCharsW.length/MAX_MISTAKES, 1);
   livesWrapElem.style.setProperty('--progress', progress);
+  livesWrapElem.classList.toggle('is-beheaded', guessedCharsW.length >= MAX_MISTAKES);
+
 }
 
 function victoryCon(){
@@ -53,7 +59,7 @@ function victoryCon(){
   if(!vic){
     console.clear();
     console.log("TEMP: You win!");
-    smileImgElem.src = "/assets/vict-smile.png"
+    mouthImgElem.src = smileImgUrl;
     
     setTimeout(() => {
       generateObsQuote();

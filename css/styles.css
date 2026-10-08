@@ -91,29 +91,70 @@ body {
       rgba(0,0,0,0) 10%,
       rgba(0, 0, 0, 0.911) 100%);
 }
+
 .lives-wrap {
+  --stage-w: 200px;      /* overall size of the display */
+  --u: calc(var(--stage-w) / 408);
+ 
+  --headroom: 240;       /* empty space above the player, where the blade hangs */
+  --blade-x: 30;         /* shifts the blade right so it sits over the player's centre line */
+  --blade-start: -394;   /* blade layer's top edge at 0 mistakes (mostly above the frame) */
+  --blade-travel: 236;   /* how far it drops by the last mistake; its edge ends at the neck */
+ 
+  --drop-x: 10;          /* where the head lands after the cut */
+  --drop-y: 395;
+  --drop-rot: 24deg;
+ 
   position: relative;
-  width: 250px;
-  height: 250px;
+  width: var(--stage-w);
+  height: calc(var(--u) * (var(--headroom) + 612));
   background: #fff;
-  overflow: hidden;    
+  overflow: hidden;
 }
-
+ 
+.lives-guillotine,
+.lives-player,
+.lives-head {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+ 
+.lives-guillotine {
+  z-index: 1;
+  left: calc(var(--u) * var(--blade-x));
+  top: calc(var(--u) * var(--blade-start));
+  transform: translateY(calc(var(--u) * var(--blade-travel) * var(--progress, 0)));
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+ 
+.lives-player,
+.lives-head {
+  top: calc(var(--u) * var(--headroom));
+}
+ 
 .lives-player {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  width: 60%;
-  transform: translateX(-50%);
+  z-index: 2;
 }
-
-.lives-noose {
-  position: absolute;
-  top: -18px;             
-  left: 50%;
-  width: 30%;
-  transform: translateX(-50%);
-  filter: invert(10%) sepia(87%) saturate(6295%) hue-rotate(345deg) brightness(84%) contrast(108%);
-  opacity: var(--progress, 0);
-  transition: opacity 0.4s ease-out;
+ 
+.lives-head {
+  z-index: 3;
+  transform-origin: calc(var(--u) * 235) calc(var(--u) * 103);   /* pivot near the base of the skull */
+}
+ 
+.lives-wrap.is-beheaded .lives-head {
+  transform:
+    translate(calc(var(--u) * var(--drop-x)), calc(var(--u) * var(--drop-y)))
+    rotate(var(--drop-rot));
+  transition: transform 0.8s cubic-bezier(0.55, 0, 1, 0.45) 0.9s;
+}
+ 
+@media (prefers-reduced-motion: reduce) {
+  .lives-guillotine,
+  .lives-wrap.is-beheaded .lives-head {
+    transition: none;
+  }
 }
